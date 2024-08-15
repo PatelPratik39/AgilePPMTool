@@ -1,6 +1,7 @@
 package com.project.ppmtool.web;
 
 import com.project.ppmtool.domain.Project;
+import com.project.ppmtool.services.MapValidationErrorService;
 import com.project.ppmtool.services.ProjectService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,22 +24,14 @@ public class ProjectController {
 
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private MapValidationErrorService mapValidationErrorService;
 
     @PostMapping("")
     public ResponseEntity< ? > createNewProject(@Valid @RequestBody Project project, BindingResult result ){
-/**
- * below logic will send specific errors using a key value pair using HashMap function and iterating using for loop
- * over FieldError class methods
- */
 
-
-        if(result.hasErrors()){
-            Map <String , String> errorMap = new HashMap <>();
-            for(FieldError error: result.getFieldErrors()){
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            return new ResponseEntity< Map <String , String> >(errorMap, HttpStatus.BAD_REQUEST);
-        }
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if(errorMap != null) return errorMap;
 
         Project addProject = projectService.saveOrUpdateProject(project);
         return new ResponseEntity <>(project, HttpStatus.CREATED);
