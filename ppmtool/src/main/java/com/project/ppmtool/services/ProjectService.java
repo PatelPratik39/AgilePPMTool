@@ -12,19 +12,31 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public Project saveOrUpdateProject( Project project){
-        try{
+
+
+        public Project saveOrUpdateProject (Project project){
+            // Convert the project identifier to uppercase to ensure consistency
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
-//            // Check if the project identifier already exists
-//            Project existingProject = projectRepository.findByProjectIdentifier(project.getProjectIdentifier());
-//            if (existingProject != null && (project.getId() == null || !existingProject.getId().equals(project.getId()))) {
-//                throw new ProjectIdException("Project ID '" + project.getProjectIdentifier() + "' already exists");
-//            }
-            return projectRepository.save(project);
-        } catch (Exception e){
-            throw new ProjectIdException("Project ID" + project.getProjectIdentifier().toUpperCase() + " already Exists");
+
+            // Check if the project already exists
+            Project existingProject = projectRepository.findByProjectIdentifier(project.getProjectIdentifier());
+
+            if (existingProject != null && (project.getId() == null || !existingProject.getId().equals(project.getId()))) {
+                throw new ProjectIdException("Project ID '" + project.getProjectIdentifier() + "' already exists");
+            }
+
+            // Ensure the correct ID is used for updating
+            if (existingProject != null) {
+                project.setId(existingProject.getId());
+            }
+
+            System.out.println("Before Save: " + project);
+            Project savedProject = projectRepository.save(project);
+            System.out.println("After Save: " + savedProject);
+
+            return savedProject;
         }
-    }
+
     public Project findByProjectByIdentifier(String projectId){
         Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
 

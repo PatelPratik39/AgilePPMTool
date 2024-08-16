@@ -10,5 +10,17 @@ import lombok.NoArgsConstructor;
 public class ProjectExceptionResponse {
 
     private String projectIdentifier ;
+    public void ProjectIdExceptionResponse( String projectIdentifier) {
+        this.projectIdentifier = projectIdentifier;
+    }
+
+    public String getProjectIdentifier() {
+        return projectIdentifier;
+    }
+
+    public void setProjectIdentifier(String projectIdentifier) {
+        this.projectIdentifier = projectIdentifier;
+    }
+
 
 }
