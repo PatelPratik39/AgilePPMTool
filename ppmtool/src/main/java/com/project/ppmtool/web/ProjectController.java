@@ -42,6 +42,27 @@ public class ProjectController {
     public Iterable<?> getAllProjects() {
         return projectService.findAllProjects();
     }
+
+//    @PutMapping("/{projectId}")
+//    public ResponseEntity<?> updateProject(@PathVariable String projectId){
+//        Project project = projectService.findByProjectByIdentifier(projectId);
+//        project.setProjectName("Updated Name");
+//        project.setDescription("Updated Description");
+//        Project updatedProject = projectService.saveOrUpdateProject(project);
+//        return new ResponseEntity<>(updatedProject, HttpStatus.OK);
+//    }
+
+    @PutMapping("/{projectId}")
+    public ResponseEntity<?> updateProject(@PathVariable String projectId, @Valid @RequestBody Project project) {
+        project.setProjectIdentifier(projectId.toUpperCase());
+        System.out.println("Incoming Project: " + project);
+        Project updatedProject = projectService.saveOrUpdateProject(project);
+        System.out.println("Updated Project: " + updatedProject);
+        return new ResponseEntity<>(updatedProject, HttpStatus.OK);
+    }
+
+
+
     @DeleteMapping("/{projectId}")
     public ResponseEntity<?> deleteProject(@PathVariable String projectId){
         projectService.deleteProjectByIdentifier(projectId);
