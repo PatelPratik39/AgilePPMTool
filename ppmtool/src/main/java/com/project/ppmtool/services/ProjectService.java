@@ -24,7 +24,9 @@ public class ProjectService {
         }catch (Exception e){
             throw new ProjectIdException("Project ID" + project.getProjectIdentifier().toUpperCase() + " already Exists");
         }
-
+    }
+    public Project findByProjectByIdentifier(String projectId){
+        return projectRepository.findByProjectIdentifier(projectId.toUpperCase());
     }
 
 }
