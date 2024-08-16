@@ -33,9 +33,17 @@ public class ProjectService {
         }
         return project;
     }
-//    using Itrable
+//    using an Iterable collection to iterate over all project list
     public Iterable<Project> findAllProjects(){
         return projectRepository.findAll();
+    }
+
+    public void deleteProjectByIdentifier (String projectId){
+        Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+        if(project == null){
+            throw new ProjectIdException("Project ID is not valid : "+ projectId);
+        }
+        projectRepository.delete(project);
     }
 
 }
