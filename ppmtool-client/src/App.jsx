@@ -1,13 +1,14 @@
-import './App.css'
-import Dashboard from './components/Dashboard'
+import "./App.css";
+import Dashboard from "./components/Dashboard";
+import Header from "./components/Layout/Header";
 
 function App() {
-
   return (
     <>
-      <Dashboard/>
+      <Header />
+      <Dashboard />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
