@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
 class Header extends Component {
   render() {
@@ -25,11 +25,8 @@ class Header extends Component {
                     Dashboard
                   </a>
                 </li>
-              </ul>
-
-              <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <a className="nav-link " href="register.html">
+                  <a className="nav-link" href="register.html">
                     Sign Up
                   </a>
                 </li>
